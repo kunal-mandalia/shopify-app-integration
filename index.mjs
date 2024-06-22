@@ -1,6 +1,7 @@
 import "dotenv/config";
 import express from "express";
 import { createAdminApiClient } from '@shopify/admin-api-client';
+import { router as storeRoute } from './integrate-store.mjs';
 
 const app = new express();
 const port = process.env.PORT || 8888;
@@ -9,8 +10,8 @@ app.use(express.json());
 
 const client = createAdminApiClient({
     apiVersion: '2024-07',
-    storeDomain: process.env.SHOPIFY_STORE_DOMAIN,
-    accessToken: process.env.SHOPIFY_API_ACCESS_TOKEN,
+    storeDomain: process.env.CLIENT_STORE_DOMAIN,
+    accessToken: process.env.CLIENT_ACCESS_TOKEN,
 });
 
 async function subscribeToBulkOperationWebhook(callbackUrl) {
@@ -135,6 +136,9 @@ app.post("/setup-webhook", async (_, res) => {
     return res.status(200).json({ data });
 })
 
+app.use('/api', storeRoute);
+
 app.listen(port, () => {
     console.info(`[shopify-app-integration]: listening on port ${port}`);
 })
+
