@@ -14,6 +14,8 @@
 - [ ] UI to integrate store, success message
 - [ ] Direct install from Shopify
 - [ ] Verify access token lifetime (> 24h, 48h)
+- [ ] Uninstall app (token revoked)
+- [ ] Reinstall app (token reinstated)
 
 ## App Distribution options
 
