@@ -8,11 +8,15 @@ const port = process.env.PORT || 8888;
 
 app.use(express.json());
 
-const client = createAdminApiClient({
-    apiVersion: '2024-07',
-    storeDomain: process.env.CLIENT_STORE_DOMAIN,
-    accessToken: process.env.CLIENT_ACCESS_TOKEN,
-});
+function getClient() {
+    const client = createAdminApiClient({
+        apiVersion: '2024-07',
+        storeDomain: process.env.CLIENT_STORE_DOMAIN,
+        accessToken: process.env.CLIENT_ACCESS_TOKEN,
+    });
+    return client;
+}
+
 
 async function subscribeToBulkOperationWebhook(callbackUrl) {
     const operation = `
@@ -33,6 +37,7 @@ async function subscribeToBulkOperationWebhook(callbackUrl) {
             }
         }
     `
+    const client = getClient();
     const res = await client.request(operation);
     return res;
 }
@@ -54,6 +59,7 @@ async function getCustomerList() {
         }  
     }
 `;
+    const client = getClient();
     const res = await client.request(operation);
     console.log(res);
 }
@@ -87,6 +93,7 @@ async function getAllCustomers() {
             }
         }
     `
+    const client = getClient();
     const res = await client.request(operation);
     return res;
 }
@@ -117,6 +124,7 @@ async function getBulkFileUrl(id) {
             }
         }
     `;
+    const client = getClient();
     const res = await client.request(operation);
     console.log(res);
     return res;
@@ -131,8 +139,8 @@ app.post("/webhook", (req, res) => {
 })
 
 app.post("/setup-webhook", async (_, res) => {
-    const callbackUrl = process.env.SHOPIFY_CALLBACK_URL;
-    const data = await subscribeToBulkOperationWebhook(callbackUrl);
+    const webhookUrl = process.env.SHOPIFY_WEBHOOK_URL;
+    const data = await subscribeToBulkOperationWebhook(webhookUrl);
     return res.status(200).json({ data });
 })
 
