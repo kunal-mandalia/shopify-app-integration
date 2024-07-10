@@ -1,0 +1,18 @@
+{
+    "id": "gid:\/\/shopify\/Customer\/6521532383266",
+    "firstName": "Russell",
+    "lastName": "Winfield",
+    "email": "russel.winfield@example.com",
+    "defaultAddress": {
+        "address1": "105 Victoria St",
+        "address2": null,
+        "countryCodeV2": "CA",
+        "country": "Canada",
+        "phone": null
+    },
+    "phone": "+16135550135",
+    "amountSpent": {
+        "amount": "0.0"
+    },
+    "numberOfOrders": "0"
+}

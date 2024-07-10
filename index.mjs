@@ -72,13 +72,26 @@ async function getAllCustomers() {
             {
             customers {
                 edges {
-                node {
-                    id
-                    firstName
-                    lastName
+                    node {
+                            id
+                            firstName
+                            lastName
+                            email
+                            defaultAddress {
+                            address1
+                            address2
+                            countryCodeV2
+                            country
+                            phone
+                            }
+                            phone
+                            amountSpent {
+                                amount
+                            }
+                            numberOfOrders
+                        }
+                    }
                 }
-                }
-            }
             }
             """
             ) {
